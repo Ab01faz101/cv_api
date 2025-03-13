@@ -26,7 +26,7 @@ class SkillController extends Controller
           'name' => $request->name,
           'skill' => $request->skill
         ];
-        $skill = Skill::query()->create($inputs);
+        $skill = Skill::create($inputs);
         return $this->successMessage($skill , 200 , 'مهارت با موفقیت ساخته شد');
     }
 
