@@ -23,7 +23,8 @@ class SkillRequest extends FormRequest
     {
         return [
             "name" => "required|max:50|string",
-            "skill" => "required|integer|between:0,100",
+            "description" => "required|min:2",
+            "value" => "required|integer|between:0,100",
         ];
     }
 }

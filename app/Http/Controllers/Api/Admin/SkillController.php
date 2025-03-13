@@ -23,8 +23,9 @@ class SkillController extends Controller
     public function store(SkillRequest $request)
     {
         $inputs = [
-          'name' => $request->name,
-          'skill' => $request->skill
+            'name' => $request->name,
+            'description' => $request->description,
+            'value' => $request->value
         ];
         $skill = Skill::create($inputs);
         return $this->successMessage($skill , 200 , 'مهارت با موفقیت ساخته شد');
@@ -39,7 +40,8 @@ class SkillController extends Controller
     {
         $inputs = [
             'name' => $request->name,
-            'skill' => $request->skill
+            'description' => $request->description,
+            'value' => $request->value
         ];
         $updateSkill = $skill->update($inputs);
         return $this->successMessage($updateSkill , 200 , 'مهارت با موفقیت ویرایش شد');
