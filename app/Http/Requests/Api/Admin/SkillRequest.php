@@ -22,9 +22,8 @@ class SkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|max:50|string",
-            "description" => "required|min:2",
-            "value" => "required|integer|between:0,100",
+            'name' => 'required|string|max:255',
+            'skill' => 'required|string|max:255',
         ];
     }
 }

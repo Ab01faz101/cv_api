@@ -13,44 +13,72 @@ class SkillController extends Controller
 {
 
     use ApiResponseTrait;
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $skills = Skill::all();
-        return $this->successMessage($skills , 200);
+        $services = Skill::all();
+        return $this->successMessage($services , 200);
     }
 
-    public function store(SkillRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        $inputs = [
+        $validator = Validator::make($request->all() , [
+            "name" => "required|min:2|max:50|string",
+            "skill" => "required|min:2|max:50|string",
+        ]);
+
+        if ($validator->fails()){
+            return $this->errorMessage($validator->messages() , 422);
+        }
+
+        $skill = Skill::create([
             'name' => $request->name,
-            'description' => $request->description,
-            'value' => $request->value
-        ];
-        $skill = Skill::create($inputs);
-        return $this->successMessage($skill , 200 , 'مهارت با موفقیت ساخته شد');
+            'skill' => $request->skill,
+        ]);
+        return $this->successMessage($skill , 200 , "skill create successfully");
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Skill $skill)
     {
         return $this->successMessage($skill , 200);
     }
 
-    public function update(SkillRequest $request , Skill $skill)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Skill $skill)
     {
-        $inputs = [
+        $validator = Validator::make($request->all() , [
+            "name" => "required|min:2|max:50|string",
+            "skill" => "required|min:1|max:50|string",
+        ]);
+
+        if ($validator->fails()){
+            return $this->errorMessage($validator->messages() , 422);
+        }
+
+        $skill = $skill->update([
             'name' => $request->name,
-            'description' => $request->description,
-            'value' => $request->value
-        ];
-        $updateSkill = $skill->update($inputs);
-        return $this->successMessage($updateSkill , 200 , 'مهارت با موفقیت ویرایش شد');
+            'skill' => $request->skill,
+        ]);
+        return $this->successMessage($skill , 200 , "skill update successfully");
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Skill $skill)
     {
         $skill->delete();
-        return $this->successMessage($skill , 200 , "مهارت با موفقیت حذف شد");
+        return $this->successMessage($skill , 200 , "skill delete successfully");
     }
 
 }
