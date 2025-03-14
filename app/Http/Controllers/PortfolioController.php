@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Portfolio;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class PortfolioController extends Controller
@@ -67,6 +68,7 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, Portfolio $portfolio)
     {
+
         $validator = Validator::make($request->all(), [
             "name" => "required|min:2|max:50|string",
             "description" => "required|min:2|max:50|string",
@@ -85,6 +87,10 @@ class PortfolioController extends Controller
         ];
 
         if ($request->hasFile('image')) {
+            if(File::exists($portfolio->image))
+            {
+                File::delete($portfolio->image);
+            }
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $path = $image->storeAs('portfolio', $imageName , "public");
