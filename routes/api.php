@@ -7,6 +7,7 @@ use App\Http\Controllers\UserJobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\SkillController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/users' , [\App\Http\Controllers\UserController::class , "index"]);
 
@@ -54,4 +55,10 @@ Route::prefix('/portfolio')->group(function (){
     Route::delete('/destroy/{portfolio}', [PortfolioController::class, 'destroy']);
 });
 
-
+Route::prefix('/contacts')->group(function (){
+    Route::get('/', [ContactController::class, 'index']);
+    Route::get('/show/{contact}', [ContactController::class, 'show']);
+    Route::post('/store', [ContactController::class, 'store']);
+    Route::put('/update/{contact}', [ContactController::class, 'update']);
+    Route::delete('/destroy/{contact}', [ContactController::class, 'destroy']);
+});
