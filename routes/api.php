@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\SkillController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/users' , [\App\Http\Controllers\UserController::class , "index"]);
 
+Route::prefix('/auth')->group(function (){
+    Route::post('login' , [LoginController::class , 'loginStore']);
+});
 
 Route::prefix('/services')->group(function (){
     Route::get('/', [ServiceController::class, 'index']);

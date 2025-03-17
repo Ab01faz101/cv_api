@@ -13,8 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->count(20)->create();
+        $user = User::query()->where('email' , 'admin@gmail.com')->first();
+        if(empty($user)) {
+             User::query()->create([
+                'name' => 'admin',
+                 'email' => 'admin@gmail.com',
+                 'password' => bcrypt('Admin@09#'),
+                 'phone' => '09121111111',
+            ]);
+        }
+
     }
 }

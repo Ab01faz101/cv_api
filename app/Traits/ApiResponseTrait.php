@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use PhpParser\Node\Expr\Array_;
+
 trait ApiResponseTrait
 {
     public function successMessage($data, $code, $message = null)
